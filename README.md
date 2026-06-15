@@ -1,4 +1,4 @@
-# Hello World Drizzle (Shipdeck Demo App)
+# Hello World Drizzle
 
 This is a minimal Hello World application built using:
 - **TypeScript**
@@ -8,6 +8,73 @@ This is a minimal Hello World application built using:
 - **pnpm** (Package manager)
 
 It connects to a PostgreSQL database, runs migrations programmatically at startup, and provides a simple dark-themed web interface to view and add users to the database.
+
+## Local Development (Docker)
+
+Use Docker Compose for a fully containerized local environment with Postgres:
+```bash
+docker compose up --build
+```
+- App runs on http://localhost:3000
+- Postgres available at localhost:5432
+- Migrations run automatically on startup
+- Health check: http://localhost:3000/health
+
+## Local Development (Native)
+
+Requires a running PostgreSQL instance.
+
+1. **Install Dependencies:**
+   ```bash
+   pnpm install
+   ```
+
+2. **Setup environment variables:**
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Generate Migrations** (after schema changes):
+   ```bash
+   pnpm db:generate
+   ```
+
+4. **Run the app:**
+   ```bash
+   pnpm dev
+   ```
+
+## Production
+
+Build and run the production Docker image:
+```bash
+docker build -t hello-world-drizzle .
+docker run -p 3000:3000 --env-file .env hello-world-drizzle
+```
+
+Or use Docker Compose for production-like deployment:
+```bash
+docker compose up -d --build app
+```
+
+## Database Schema
+
+The `users` table is managed via Drizzle ORM:
+
+| Column     | Type      | Constraints                |
+|------------|-----------|----------------------------|
+| id         | serial    | PRIMARY KEY                |
+| name       | text      | NOT NULL                   |
+| email      | text      | NOT NULL                   |
+| created_at | timestamp | DEFAULT now(), NOT NULL    |
+
+## API Endpoints
+
+| Method | Path    | Description                   |
+|--------|---------|-------------------------------|
+| GET    | /       | Web UI (list/add users)       |
+| POST   | /users  | Add a new user                |
+| GET    | /health | Health check                  |
 
 ## Running Locally
 
@@ -39,9 +106,3 @@ It connects to a PostgreSQL database, runs migrations programmatically at startu
    pnpm start
    ```
 
-## Deploying on Shipdeck
-
-This app is fully compatible with Shipdeck's zero-config setup out-of-the-box. When you import this repo into Shipdeck:
-1. **Auto-provisioning:** Shipdeck will automatically detect Drizzle/Postgres and provision a dedicated, isolated database space.
-2. **Auto-injection:** Shipdeck will inject the correct `DATABASE_URL` and `PORT` environment variables dynamically.
-3. **Auto-migration:** The application's startup script runs programmatic Drizzle migrations, making database schema updates completely automatic.

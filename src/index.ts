@@ -18,7 +18,7 @@ app.get("/", async (_req, res) => {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Shipdeck Hello World</title>
+        <title>Hello World</title>
         <style>
           body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -111,7 +111,7 @@ app.get("/", async (_req, res) => {
       </head>
       <body>
         <div class="card">
-          <h1>🚀 Shipdeck Connected!</h1>
+          <h1>🚀 Hello World!</h1>
           <p>This is a minimal Hello World app running on Node.js, TypeScript, Postgres, and Drizzle ORM.</p>
           <div class="status">✓ Database Connected & Migrated</div>
 
