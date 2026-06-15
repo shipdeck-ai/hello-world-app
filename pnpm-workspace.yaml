@@ -1,0 +1,5 @@
+# Isolated workspace to prevent pnpm from merging with parent workspace
+packages: []
+allowBuilds:
+  es5-ext: true
+  esbuild: true
